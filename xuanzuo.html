@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        li{
+            list-style: none;
+        }
+        .div_il{
+            width: 600px;
+            height: 400px;
+            margin: 0 auto;
+        }
+        .lili{
+            width: 60px;
+            height: 45px;
+            background-color: #d6d6da;
+            margin-top: 2px;
+            border-radius: 5px;
+            float: left;
+            margin-left: 4px;
+        }
+        .liAA{
+            width: 60px;
+            height: 45px;
+            background-color: #d6d6da;
+            margin-top: 2px;
+            border-radius: 5px;
+            float: left;
+            margin-left: 4px;
+        }
+        .snow-container{
+            background-color: #ea2b31;
+        }
+        .snow{
+            background-color: #3eda87;
+        }
+        .div_2{
+            width: 500px;
+            height: 20px;
+            margin: 0 auto;
+        }
+        .div_2 span{
+            display: block;
+            width: 90px;
+            height: 40px;
+            border: 1px solid #ea2b31;
+            border-radius: 15px;
+            float: left;
+            text-align: center;
+            line-height: 30px;
+        }
+        .xian_bb{
+            position: fixed;
+            background-color: rgba(15, 15, 15, 0.54);
+            top:0;
+            width: 100%;
+            height: 100%;
+        }
+        .caho{
+            width: 200px;
+            height: 100px;
+            margin: 0 auto;
+            margin-top: 200px;
+            color: #fff1ef;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+   <div id="div" class="div_il">
+       <ul>
+
+       </ul>
+   </div>
+   <div class="xian_bb" id="ppt">
+           <div  class="caho">不好意思超出五个了</div>
+   </div>
+   <div class="div_2">
+       <span>2人座位</span>
+       <span>3人座位</span>
+       <span>4人座位</span>
+       <span>5人座位</span>
+   </div>
+</body>
+</html>
+<script>
+//    data-info="{"index":"0","row":"2", "column":"7", "rowId": "2", "columnId": "07", "type": "N", "seatNo": "0000000000000001-2-07"}"
+      var div = document.getElementById('div')
+      var ppv = document.getElementById('ppt')
+      var ul = div.getElementsByTagName('ul')[0]
+      ppv.style.display='none'
+      aa()
+      console.log(ul)
+      function aa() {
+          var n=0
+          for(var i=0;i<6;i++){
+              n++
+              for(var j=0;j<9;j++){
+                      ul.innerHTML+='<li class="liAA" data-id='+n+''+j+'>'+n+'排-'+j+'</li>'
+
+              }
+          }
+      }
+      var li = ul.getElementsByTagName('li');
+      var yy= 0
+      var arr = []
+      var yixuan = ["51", "42", "62", "63", "57"]
+      var trr=[];
+      var dian=false
+      var acc=["1排-0", "1排-1", "1排-7", "1排-8", "2排-8", "3排-8", "5排-8", "6排-8"]
+      for(var i=0;i<li.length;i++){
+          li[i].index=i
+          for(var j=0;j<acc.length;j++){
+              if(li[i].innerHTML === acc[j]){
+                  li[i].style.opacity =0
+
+              }
+          }
+
+      }
+      for(var i=0;i<li.length;i++){
+        li[i].index=i
+        for(var j=0;j<yixuan.length;j++){
+            if(li[i].dataset.id == yixuan[j]){
+                li[i].classList.add("snow")
+            }
+        }
+    }
+      Array.prototype.removeByValue = function (val) {
+          for (var i = 0; i < this.length; i++) {
+              if (this[i] == val) {
+                  this.splice(i, 1);
+                  break;
+              }
+          }
+      }
+      function removeDuplicatedItem(arr) {
+             for(var i = 0; i < arr.length-1; i++){
+                     for(var j = i+1; j < arr.length; j++){
+                  if(arr[i]==arr[j]){
+                                   arr.splice(j,1);//console.log(arr[j]);
+                                    j--;
+                  }
+              }
+          }
+             return arr;
+       }
+      for(var i=0;i<li.length;i++){
+          li[i].index=i
+              li[i].onclick=function (event) {
+                  event.cancelBubble = true;
+                 for(var n=0;n<yixuan.length;n++){
+                      if(this.dataset.id == yixuan[n]) {
+                          console.log(yixuan[n])
+                          return
+                      }
+                 }
+
+                 if(arr.length<=4){
+                     yy++
+                     this.classList.add("snow-container")
+                     for(var j=0;j<arr.length;j++){
+                         if(this.dataset.id ===arr[j]){
+                             console.log(this.dataset.id )
+                             this.classList.remove("snow-container")
+                             arr.removeByValue(this.dataset.id)
+                             console.log(arr+'bbbbbbbbbbb')
+                             return
+                         }
+                     }
+                     arr.push(this.dataset.id)
+                     removeDuplicatedItem(arr)
+                     console.log(arr+'aaaaaaaaa')
+                 } else{
+                     console.log("11")
+//                     ppv.style.display='block'
+                     for(var j=0;j<arr.length;j++){
+                         if(this.dataset.id ===arr[j]){
+                             this.classList.remove("snow-container")
+                             arr.removeByValue(this.dataset.id)
+                             console.log(arr+"dddddddd")
+                             return
+                         }
+                         console.log(arr+"ccccccccc")
+                     }
+
+                 }
+
+              }
+
+      }
+    
+</script>
